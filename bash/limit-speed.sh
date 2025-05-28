@@ -1,7 +1,7 @@
 #!/bin/bash
 USER_LIST=$(grep -E ".*# .*" "/usr/local/etc/xray/config.json" | cut -d ' ' -f 27)
 USER_NAME=($(awk -F' ' '{print $0}' <<< "$USER_LIST"))
-SPEED=87500
+SPEED=700000
 LIMIT_USAGE=10737418240
 for USER in "${USER_NAME[@]}"
 do
