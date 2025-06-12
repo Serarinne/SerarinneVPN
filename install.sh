@@ -69,7 +69,7 @@ wget -O /usr/bin/system-bandwidth "${SERVER_SCRIPT}/bash/system-bandwidth.sh" &&
 wget -O /usr/bin/user-bandwidth "${SERVER_SCRIPT}/bash/user-bandwidth.sh" && chmod +x /usr/bin/user-bandwidth
 wget -O /usr/bin/user-login "${SERVER_SCRIPT}/bash/user-login.sh" && chmod +x /usr/bin/user-login
 wget -O /usr/bin/user-usage "${SERVER_SCRIPT}/bash/user-usage.sh" && chmod +x /usr/bin/user-usage
-
+wget -O /usr/bin/bot-user-list "${SERVER_SCRIPT}/bash/bot-user-list.sh" && chmod +x /usr/bin/bot-user-list
 
 echo "59 23 * * * root auto-delete-user" >> /etc/crontab
 echo "1 0 * * * root rm -f /root/serarinne/user-usage" >> /etc/crontab
