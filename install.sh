@@ -72,15 +72,15 @@ wget -O /usr/bin/user-usage "${SERVER_SCRIPT}/bash/user-usage.sh" && chmod +x /u
 wget -O /usr/bin/bot-user-list "${SERVER_SCRIPT}/bash/bot-user-list.sh" && chmod +x /usr/bin/bot-user-list
 wget -O /usr/bin/bot-add-user "${SERVER_SCRIPT}/bash/bot-add-user.sh" && chmod +x /usr/bin/bot-add-user
 
-echo "59 23 * * * root auto-delete-user" >> /etc/crontab
+echo "#59 23 * * * root auto-delete-user" >> /etc/crontab
 echo "1 0 * * * root rm -f /root/serarinne/user-usage" >> /etc/crontab
-echo "5 0 * * * root limitless-speed" >> /etc/crontab
+echo "#5 0 * * * root limitless-speed" >> /etc/crontab
 echo "0 1 * * * root backup-server" >> /etc/crontab
 echo "0 */1 * * * root user-log" >> /etc/crontab
-echo "0 5 * * * root limit-speed" >> /etc/crontab
-echo "0 10 * * * root limit-speed" >> /etc/crontab
-echo "0 15 * * * root limit-speed" >> /etc/crontab
-echo "0 20 * * * root limit-speed" >> /etc/crontab
+echo "#0 5 * * * root limit-speed" >> /etc/crontab
+echo "#0 10 * * * root limit-speed" >> /etc/crontab
+echo "#0 15 * * * root limit-speed" >> /etc/crontab
+echo "#0 20 * * * root limit-speed" >> /etc/crontab
 
 apt autoclean -y
 echo "menu" >> /root/.profile
