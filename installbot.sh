@@ -8,6 +8,7 @@ echo -e "-----------------------------------------"
 echo -e ""
 read -rp "WHAPI TOKEN : " WHAPI_TOKEN
 
+rm -rf /root/serarinne/bot
 mkdir /root/serarinne/bot
 wget -O /root/serarinne/bot/index.py "${SERVER_SCRIPT}/bot/index.py" && chmod +x /root/serarinne/bot/index.py
 
@@ -45,3 +46,5 @@ systemctl enable panelbot.service
 systemctl start panelbot.service
 systemctl restart panelbot.service
 rm -f /root/installbot.sh
+
+echo "0 1 * * * root systemctl restart panelbot.service" >> /etc/crontab
