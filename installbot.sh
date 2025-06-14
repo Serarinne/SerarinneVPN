@@ -24,7 +24,7 @@ cat > /root/serarinne/bot/.env <<-END
 TOKEN=${WHAPI_TOKEN}
 API_URL=https://gate.whapi.cloud
 BOT_URL=http://${SERVER_DOMAIN}:5000/hook
-IPSVR=${SERVER_DOMAIN}
+IPSVR=0.0.0.0
 PORT=5000
 END
 
