@@ -12,7 +12,7 @@ echo -e "Restoring...."
 rm -f /usr/local/etc/xray/config.json
 rm -f /etc/haproxy/haproxy.cfg
 rm -rf /root/serarinne/*
-cp /root/root/serarinne/* /root/serarinne
+mv /root/root/serarinne /root
 cp /root/serarinne/config.json /usr/local/etc/xray/config.json
 cp /root/serarinne/haproxy.cfg /etc/haproxy/haproxy.cfg
 rm -f /root/backup.zip
