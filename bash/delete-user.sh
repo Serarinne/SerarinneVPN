@@ -30,5 +30,5 @@ else
     read -p "$(echo -e "Back")"
     systemctl restart xray
     systemctl restart haproxy
-    extend-user
+    delete-user
 fi
