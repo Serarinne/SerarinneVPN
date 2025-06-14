@@ -42,8 +42,6 @@ def handle_new_messages():
 				continue
 		sender = {'to': message.get('chat_id')}
 		command_input = message.get('text', {}).get('body', '').strip().lower()
-		print("Received data:", command_input)
-		ConnectServer = spur.SshShell(hostname="159.223.74.92", username="root", password="@1Amztorevpn")
 
 		if command_input.startswith("buat "):
 			UserID = uuid.uuid4()
