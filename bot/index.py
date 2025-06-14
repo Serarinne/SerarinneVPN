@@ -32,6 +32,22 @@ def send_whapi_request(endpoint, params=None, method='POST'):
 		response = requests.request(method, url, headers=headers)
 	return response.json()
 
+def set_hook():
+	if os.getenv('BOT_URL'):
+		settings = {
+			'webhooks': [
+				{
+					'url': os.getenv('BOT_URL'),
+					'events': [
+						{'type': "message", 'method': "post"}
+					],
+					'mode': "method"
+				}
+			]
+	}
+	send_whapi_request('settings', settings, 'PATCH')
+
+
 @app.route('/hook/messages', methods=['POST'])
 def handle_new_messages():
 	try:
@@ -44,13 +60,13 @@ def handle_new_messages():
 		command_input = message.get('text', {}).get('body', '').strip().lower()
 
 		if command_input.startswith("buat "):
-			UserID = uuid.uuid4()
-			userData = subprocess.run(["bot-add-user",command_input[5:].title().replace(" ",""),str(UserID)], capture_output=True, text=True)
-			sender['body'] = userData.output.decode("utf-8")
+			USERUID = uuid.uuid4()
+			USERDATA = subprocess.run(['bot-add-user',command_input[5:].title().replace(" ",""),str(USERUID)], capture_output=True, text=True)
+			sender['body'] = USERDATA.stdout
 			endpoint = 'messages/text'
 		elif command_input.startswith("pengguna"):
-			userList = subprocess.run(["bot-user-list"], capture_output=True, text=True)
-			sender['body'] = userList.output.decode("utf-8")
+			USERLIST = subprocess.run(['bot-user-list'], capture_output=True, text=True)
+			sender['body'] = USERLIST.stdout
 			endpoint = 'messages/text'
 		elif command_input.startswith("restart server"):
 			subprocess.run(['reboot'])
@@ -68,6 +84,7 @@ def index():
 	return 'Bot is running'
 
 if __name__ == '__main__':
+	set_hook()
 	ipsvr = os.getenv('IPSVR')
 	port = os.getenv('PORT') or (443 if os.getenv('BOT_URL', '').startswith('https:') else 80)
 	app.run(host=ipsvr, port=port, debug=False)
