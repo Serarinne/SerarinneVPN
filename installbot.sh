@@ -4,7 +4,6 @@ export SERVER_SCRIPT="https://raw.githubusercontent.com/Serarinne/SerarinneVPN/m
 
 mkdir /root/serarinne/bot
 wget -O /root/serarinne/bot/index.py "${SERVER_SCRIPT}/bot/index.py" && chmod +x /root/serarinne/bot/index.py
-wget -O /root/serarinne/bot/requirements.txt "${SERVER_SCRIPT}/bot/requirements.txt" && chmod +x /root/serarinne/bot/requirements.txt
 wget -O /root/serarinne/bot/.env "${SERVER_SCRIPT}/bot/.env" && chmod +x /root/serarinne/bot/.env
 
 apt install python3-pip
