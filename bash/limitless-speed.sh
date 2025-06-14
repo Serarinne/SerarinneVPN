@@ -5,5 +5,5 @@ USER_NAME=($(awk -F' ' '{print $0}' <<< "$USER_LIST"))
 for USER in "${USER_NAME[@]}"
 do
     sed -i "/# ${USER} Limit/d" /etc/haproxy/haproxy.cfg
-    systemctl restart haproxy
 done
+systemctl restart haproxy
