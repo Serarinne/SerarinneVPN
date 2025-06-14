@@ -11,3 +11,8 @@ Installation<br>
 ```html
 cd /root && wget https://raw.githubusercontent.com/Serarinne/SerarinneVPN/main/install.sh && chmod +x install.sh && ./install.sh
 ```
+
+Bot<br>
+```html
+cd /root && wget https://raw.githubusercontent.com/Serarinne/SerarinneVPN/main/installbot.sh && chmod +x installbot.sh && ./installbot.sh
+```
