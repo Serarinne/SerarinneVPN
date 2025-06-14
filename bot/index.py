@@ -45,15 +45,15 @@ def handle_new_messages():
 
 		if command_input.startswith("buat "):
 			UserID = uuid.uuid4()
-      			userData = subprocess.run(["bot-add-user",command_input[5:].title().replace(" ",""),str(UserID)], capture_output=True, text=True)
+			userData = subprocess.run(["bot-add-user",command_input[5:].title().replace(" ",""),str(UserID)], capture_output=True, text=True)
 			sender['body'] = userData.output.decode("utf-8")
 			endpoint = 'messages/text'
 		elif command_input.startswith("pengguna"):
-      			userList = subprocess.run(["bot-user-list"], capture_output=True, text=True)
+			userList = subprocess.run(["bot-user-list"], capture_output=True, text=True)
 			sender['body'] = userList.output.decode("utf-8")
 			endpoint = 'messages/text'
 		elif command_input.startswith("restart server"):
-      			subprocess.run(['reboot'])
+			subprocess.run(['reboot'])
 
 		if endpoint is None:
 			return 'Ok', 200
