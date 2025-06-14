@@ -11,7 +11,7 @@ read -rp "WHAPI TOKEN : " WHAPI_TOKEN
 mkdir /root/serarinne/bot
 wget -O /root/serarinne/bot/index.py "${SERVER_SCRIPT}/bot/index.py" && chmod +x /root/serarinne/bot/index.py
 
-apt install python3-pip
+apt install python3-pip -y
 pip install Flask
 pip install requests
 pip install jsonify
