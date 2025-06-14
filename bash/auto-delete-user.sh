@@ -12,7 +12,7 @@ do
         sed -i "/# $USER Frontend/d" /etc/haproxy/haproxy.cfg
         sed -i "/# $USER Backend/d" /etc/haproxy/haproxy.cfg
         echo "${USER} deleted"
-        systemctl restart xray
-        systemctl restart haproxy
     fi
 done
+systemctl restart xray
+systemctl restart haproxy
