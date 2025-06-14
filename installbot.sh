@@ -1,6 +1,6 @@
 #!/bin/bash
 export SERVER_SCRIPT="https://raw.githubusercontent.com/Serarinne/SerarinneVPN/main"
-export SERVER_DOMAIN=$(cat /root/serarinne/domain)
+export SERVER_IP=$(cat /root/serarinne/ip)
 clear
 echo -e "-----------------------------------------"
 echo -e "|              Setup Bot                |"
@@ -23,8 +23,8 @@ pip install spur
 cat > /root/serarinne/bot/.env <<-END
 TOKEN=${WHAPI_TOKEN}
 API_URL=https://gate.whapi.cloud
-BOT_URL=http://${SERVER_DOMAIN}:5000/hook
-IPSVR=0.0.0.0
+BOT_URL=http://${SERVER_IP}:5000/hook
+IPSVR=${SERVER_IP}
 PORT=5000
 END
 
