@@ -76,7 +76,7 @@ echo "#59 23 * * * root auto-delete-user" >> /etc/crontab
 echo "1 0 * * * root rm -f /root/serarinne/user-usage" >> /etc/crontab
 echo "#5 0 * * * root limitless-speed" >> /etc/crontab
 echo "0 1 * * * root backup-server" >> /etc/crontab
-echo "0 */1 * * * root user-log" >> /etc/crontab
+echo "0 */1 * * * root user-usage" >> /etc/crontab
 echo "#0 5 * * * root limit-speed" >> /etc/crontab
 echo "#0 10 * * * root limit-speed" >> /etc/crontab
 echo "#0 15 * * * root limit-speed" >> /etc/crontab
