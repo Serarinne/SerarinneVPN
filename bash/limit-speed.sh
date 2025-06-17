@@ -7,7 +7,10 @@ for USER in "${USER_NAME[@]}"
 do
     USER_USAGE=$(grep -E "^${USER}#" "/root/serarinne/user-usage" | awk '{ gsub("#", " ") ; print $0 }' | cut -d ' ' -f 2)
     if [[ $USER_USAGE -gt $LIMIT_USAGE ]]; then
-        sed -i '/server '${USER}' .*. # '${USER}' Backend/a     filter bwlim-out mydownloadlimit limit '${SPEED}' key be_id table limit_speed/downloadrate # '${USER}' Backend # '${USER}' Limit\n    http-response set-bandwidth-limit mydownloadlimit # '${USER}' Backend # '${USER}' Limit\n    filter bwlim-in myuploadlimit limit '${SPEED}' key be_id table limit_speed/uploadrate # '${USER}' Backend # '${USER}' Limit\n    http-request set-bandwidth-limit myuploadlimit # '${USER}' Backend # '${USER}' Limit' /etc/haproxy/haproxy.cfg
+        LIMITED_USER=$(grep -E ".*# ${USER} Backend # ${USER} Limit" "/etc/haproxy/haproxy.cfg" | wc -l)
+        if [[ ${LIMITED_USER} == '0' ]]; then
+            sed -i '/server '${USER}' .*. # '${USER}' Backend/a     filter bwlim-out mydownloadlimit limit '${SPEED}' key be_id table limit_speed/downloadrate # '${USER}' Backend # '${USER}' Limit\n    http-response set-bandwidth-limit mydownloadlimit # '${USER}' Backend # '${USER}' Limit\n    filter bwlim-in myuploadlimit limit '${SPEED}' key be_id table limit_speed/uploadrate # '${USER}' Backend # '${USER}' Limit\n    http-request set-bandwidth-limit myuploadlimit # '${USER}' Backend # '${USER}' Limit' /etc/haproxy/haproxy.cfg
+        fi
     fi
 done
 systemctl restart haproxy
