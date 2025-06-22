@@ -12,7 +12,7 @@ rm -rf /root/serarinne/bot
 mkdir /root/serarinne/bot
 wget -O /root/serarinne/bot/index.py "${SERVER_SCRIPT}/bot/index.py" && chmod +x /root/serarinne/bot/index.py
 
-apt install python3 python3-pip python3-full -y
+apt install python3 python3-pip python3-flask python3-full -y
 pip install --break-system-packages Flask
 pip install --break-system-packages requests
 pip install --break-system-packages jsonify
