@@ -13,12 +13,12 @@ mkdir /root/serarinne/bot
 wget -O /root/serarinne/bot/index.py "${SERVER_SCRIPT}/bot/index.py" && chmod +x /root/serarinne/bot/index.py
 
 apt install python3 python3-pip python3-full -y
-pip install Flask
-pip install requests
-pip install jsonify
-pip install requests-toolbelt
-pip install python-dotenv
-pip install spur
+pip install --break-system-packages Flask
+pip install --break-system-packages requests
+pip install --break-system-packages jsonify
+pip install --break-system-packages requests-toolbelt
+pip install --break-system-packages python-dotenv
+pip install --break-system-packages spur
 
 cat > /root/serarinne/bot/.env <<-END
 TOKEN=${WHAPI_TOKEN}
