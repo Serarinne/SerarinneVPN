@@ -29,10 +29,15 @@ echo -e "-----------------------------------------"
 echo -e "|           Instalasi Package           |"
 echo -e "-----------------------------------------"
 apt install curl wget nano vnstat iftop htop zip unzip jq net-tools -y
-apt install --no-install-recommends software-properties-common
-add-apt-repository ppa:vbernat/haproxy-3.1
+#Ubuntu
+#apt install --no-install-recommends software-properties-common
+#add-apt-repository ppa:vbernat/haproxy-3.1
+
+#Debian
+curl https://haproxy.debian.net/haproxy-archive-keyring.gpg > /usr/share/keyrings/haproxy-archive-keyring.gpg
+echo deb "[signed-by=/usr/share/keyrings/haproxy-archive-keyring.gpg]" http://haproxy.debian.net bookworm-backports-3.2 main > /etc/apt/sources.list.d/haproxy.list
 apt update
-apt install haproxy -y
+apt install haproxy=3.2.\* -y
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install
 
 mkdir /root/serarinne
