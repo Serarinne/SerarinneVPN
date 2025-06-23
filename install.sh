@@ -37,7 +37,7 @@ add-apt-repository ppa:vbernat/haproxy-3.1
 #curl https://haproxy.debian.net/haproxy-archive-keyring.gpg > /usr/share/keyrings/haproxy-archive-keyring.gpg
 #echo deb "[signed-by=/usr/share/keyrings/haproxy-archive-keyring.gpg]" http://haproxy.debian.net bookworm-backports-3.2 main > /etc/apt/sources.list.d/haproxy.list
 apt update
-apt install haproxy=3.2.\* -y
+apt install haproxy
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install
 
 mkdir /root/serarinne
