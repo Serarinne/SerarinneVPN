@@ -22,6 +22,7 @@ XRAY_DATA () {
 }
 
 USERS_DATA=$(XRAY_DATA $1)
+user-usage
 echo -e "Quota Hari Ini   : $TODAY_USAGE"
 echo -e "Quota Bulan Ini  : $MONTH_USAGE"
 echo ""
