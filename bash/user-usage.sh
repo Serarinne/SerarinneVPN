@@ -17,4 +17,5 @@ do
         sed -i "s/$USER#.*$/$USER#$TOTAL_USAGE/g" /root/serarinne/user-usage
     fi
 done
-xray api statsquery --server=$XRAY_PORT --reset=true 2>/dev/null
+xray api statsquery --server=$XRAY_PORT --reset=true > /dev/null 2>&1
+limit-speed
