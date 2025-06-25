@@ -21,7 +21,7 @@ XRAY_DATA () {
     done
 }
 
-user-usage
+user-usage > /dev/null 2>&1
 USERS_DATA=$(XRAY_DATA $1)
 echo -e "Quota Hari Ini   : $TODAY_USAGE"
 echo -e "Quota Bulan Ini  : $MONTH_USAGE"
