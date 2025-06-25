@@ -41,6 +41,10 @@ RemainAfterExit=yes
 WantedBy=multi-user.target
 END
 
+wget -O /usr/bin/bot-user-list "${SERVER_SCRIPT}/bash/bot-user-list.sh" && chmod +x /usr/bin/bot-user-list
+wget -O /usr/bin/bot-add-user "${SERVER_SCRIPT}/bash/bot-add-user.sh" && chmod +x /usr/bin/bot-add-user
+wget -O /usr/bin/bot-user-status "${SERVER_SCRIPT}/bash/bot-user-status.sh" && chmod +x /usr/bin/bot-user-status
+
 chmod +x /etc/systemd/system/panelbot.service
 systemctl enable panelbot.service
 systemctl start panelbot.service
