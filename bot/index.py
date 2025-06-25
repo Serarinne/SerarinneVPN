@@ -68,6 +68,10 @@ def handle_new_messages():
 			USERLIST = subprocess.run(['bot-user-list'], capture_output=True, text=True)
 			sender['body'] = USERLIST.stdout
 			endpoint = 'messages/text'
+		elif command_input.startswith("kuota"):
+			USERSTATUS = subprocess.run(['bot-user-status'], capture_output=True, text=True)
+			sender['body'] = USERSTATUS.stdout
+			endpoint = 'messages/text'
 		elif command_input.startswith("restart server"):
 			subprocess.run(['reboot'])
 
