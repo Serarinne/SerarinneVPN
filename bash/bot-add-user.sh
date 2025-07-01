@@ -2,6 +2,7 @@
 clear
 SERVER_BUG=$(cat /root/serarinne/bug)
 SERVER_CF=$(cat /root/serarinne/cloudflare)
+SERVER_DOMAIN=$(cat /root/serarinne/domain)
 SERVER_NAME=$(cat /root/serarinne/name)
 SERVER_IP=$(cat /root/serarinne/ip)
 
@@ -25,15 +26,15 @@ until [[ ${CHECKED_PORT} == '0' ]]; do
     CHECKED_PORT=$(nc -z -v localhost $USER_PORT 2>&1 | grep succeeded | wc -l)
 done
 
-curl --location 'https://api.cloudflare.com/client/v4/zones/6a5a22da00ad10ab2fbcb32c969872e1/dns_records' > /dev/null 2>&1 \
+curl --location 'https://api.cloudflare.com/client/v4/zones/db9dfc0dbde5ff5a54943bdeda6f153e/dns_records' > /dev/null 2>&1 \
 --header 'Content-Type: application/json' \
---header 'X-Auth-Email: serarinne@gmail.com' \
---header 'X-Auth-Key: 5a1eca87cd911e698afe5538150e969f39feb' \
+--header 'X-Auth-Email: schwarzertenshi90@gmail.com' \
+--header 'X-Auth-Key: eed1ee9993f03fc136ff77ac0dddb1e282530' \
 --data '{
-      "content": "'${SERVER_IP}'",
+      "content": "'${SERVER_DOMAIN}'",
       "name": "'${USER_DOMAIN}'",
       "proxied": false,
-      "type": "A"
+      "type": "CNAME"
     }'
 
 sed -i '/#USER_ACCOUNT/a ,{"listen": "127.0.0.1","port": "'${USER_PORT}'","protocol": "trojan","settings": {"clients": [{"password": "'${USER_ID}'", "email": "'${USER_NAME}'", "level": 0}],"decryption": "none"},"streamSettings": {"network": "ws","security": "none","wsSettings": {"path": "/'${USER_NAME}'","host": ""},"quicSettings": {},"sockopt": {"mark": 0,"tcpFastOpen": true}},"sniffing": {"enabled": true,"destOverride": ["http","tls"]}} # '${USER_NAME}' '${USER_DATE}'' /usr/local/etc/xray/config.json
