@@ -26,10 +26,10 @@ until [[ ${CHECKED_PORT} == '0' ]]; do
     CHECKED_PORT=$(nc -z -v localhost $USER_PORT 2>&1 | grep succeeded | wc -l)
 done
 
-curl --location 'https://api.cloudflare.com/client/v4/zones/db9dfc0dbde5ff5a54943bdeda6f153e/dns_records' > /dev/null 2>&1 \
+curl --location 'https://api.cloudflare.com/client/v4/zones/2a55ca940ef2b1d004b567dba54bcd1b/dns_records' > /dev/null 2>&1 \
 --header 'Content-Type: application/json' \
 --header 'X-Auth-Email: schwarzertenshi90@gmail.com' \
---header 'X-Auth-Key: eed1ee9993f03fc136ff77ac0dddb1e282530' \
+--header 'X-Auth-Key: eeec3998181f0df4fdd7089b8dbb14cc6c4bd' \
 --data '{
       "content": "'${SERVER_DOMAIN}'",
       "name": "'${USER_DOMAIN}'",
