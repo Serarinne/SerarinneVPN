@@ -31,7 +31,7 @@ echo -e "-----------------------------------------"
 apt install curl wget nano vnstat iftop htop zip unzip jq net-tools -y
 #Ubuntu
 apt install --no-install-recommends software-properties-common
-add-apt-repository ppa:vbernat/haproxy-3.1
+add-apt-repository ppa:vbernat/haproxy-3.1 -y
 
 #Debian
 #curl https://haproxy.debian.net/haproxy-archive-keyring.gpg > /usr/share/keyrings/haproxy-archive-keyring.gpg
