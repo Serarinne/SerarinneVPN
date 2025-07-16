@@ -37,13 +37,16 @@ curl --location 'https://api.cloudflare.com/client/v4/zones/2a55ca940ef2b1d004b5
       "type": "CNAME"
     }'
 
-sed -i '/#USER_ACCOUNT/a ,{"listen": "127.0.0.1","port": "'${USER_PORT}'","protocol": "trojan","settings": {"clients": [{"password": "'${USER_ID}'", "email": "'${USER_NAME}'", "level": 0}],"decryption": "none"},"streamSettings": {"network": "ws","security": "none","wsSettings": {"path": "/'${USER_NAME}'","host": ""},"quicSettings": {},"sockopt": {"mark": 0,"tcpFastOpen": true}},"sniffing": {"enabled": true,"destOverride": ["http","tls"]}} # '${USER_NAME}' '${USER_DATE}'' /usr/local/etc/xray/config.json
+#sed -i '/#USER_ACCOUNT/a ,{"listen": "127.0.0.1","port": "'${USER_PORT}'","protocol": "trojan","settings": {"clients": [{"password": "'${USER_ID}'", "email": "'${USER_NAME}'", "level": 0}],"decryption": "none"},"streamSettings": {"network": "ws","security": "none","wsSettings": {"path": "/'${USER_NAME}'","host": ""},"quicSettings": {},"sockopt": {"mark": 0,"tcpFastOpen": true}},"sniffing": {"enabled": true,"destOverride": ["http","tls"]}} # '${USER_NAME}' '${USER_DATE}'' /usr/local/etc/xray/config.json
+sed -i '/#USER_ACCOUNT/a ,{"listen": "127.0.0.1","port": "'${USER_PORT}'","protocol": "vmess","settings": {"clients": [{"id": "'${USER_ID}'", "email": "'${USER_NAME}'","alterId": 0,"level": 0}],"decryption": "none"},"streamSettings": {"network": "ws","security": "none","wsSettings": {"path": "/'${USER_NAME}'","host": ""},"quicSettings": {},"sockopt": {"mark": 0,"tcpFastOpen": true}},"sniffing": {"enabled": true,"destOverride": ["http","tls"]}} # '${USER_NAME}' '${USER_DATE}'' /usr/local/etc/xray/config.json
 
 sed -i '/#USER_FRONTEND/a     use_backend websocket_'${USER_NAME}' if { path /'${USER_NAME}' } # '${USER_NAME}' Frontend' /etc/haproxy/haproxy.cfg
 
 sed -i '/#USER_BACKEND/a backend websocket_'${USER_NAME}' # '${USER_NAME}' Backend\n    mode http # '${USER_NAME}' Backend\n    balance roundrobin # '${USER_NAME}' Backend\n    option forwardfor # '${USER_NAME}' Backend\n    timeout tunnel 2h # '${USER_NAME}' Backend\n    server '${USER_NAME}' 127.0.0.1:'${USER_PORT}' check # '${USER_NAME}' Backend' /etc/haproxy/haproxy.cfg
 
-ACCOUNT_URL="trojan://${USER_ID}@${SERVER_BUG}:80?type=ws&host=${USER_DOMAIN}&headerType=none&path=%252F${USER_NAME}&security=none#${SERVER_NAME} ${USER_NAME} ${USER_DATE}"
+ACCOUNT_CONFIG='{"ps": "${SERVER_NAME} ${USER_NAME} ${USER_DATE}", "add": "${SERVER_BUG}", "port": "80", "id": "${USER_ID}", "aid": "0", "net": "ws", "path": "/${USER_NAME}", "type": "none", "host": "${USER_DOMAIN}", "tls": "none"}'
+ACCOUNT_BASE64=$(base64 -w 0 ${ACCOUNT_CONFIG})
+ACCOUNT_URL="vmess://${ACCOUNT_BASE64}"
 
 systemctl restart xray
 systemctl restart haproxy
