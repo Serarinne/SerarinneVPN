@@ -44,9 +44,8 @@ sed -i '/#USER_FRONTEND/a     use_backend websocket_'${USER_NAME}' if { path /'$
 
 sed -i '/#USER_BACKEND/a backend websocket_'${USER_NAME}' # '${USER_NAME}' Backend\n    mode http # '${USER_NAME}' Backend\n    balance roundrobin # '${USER_NAME}' Backend\n    option forwardfor # '${USER_NAME}' Backend\n    timeout tunnel 2h # '${USER_NAME}' Backend\n    server '${USER_NAME}' 127.0.0.1:'${USER_PORT}' check # '${USER_NAME}' Backend' /etc/haproxy/haproxy.cfg
 
-ACCOUNT_CONFIG='{"ps": "${SERVER_NAME} ${USER_NAME} ${USER_DATE}", "add": "${SERVER_BUG}", "port": "80", "id": "${USER_ID}", "aid": "0", "net": "ws", "path": "/${USER_NAME}", "type": "none", "host": "${USER_DOMAIN}", "tls": "none"}'
-ACCOUNT_BASE64=$(base64 -w 0 ${ACCOUNT_CONFIG})
-ACCOUNT_URL="vmess://${ACCOUNT_BASE64}"
+ACCOUNT_CONFIG=$(echo -n "{'v': '2', 'ps': '${SERVER_NAME} ${USER_NAME} ${USER_DATE}', 'add': '${SERVER_BUG}', 'port': '80', 'id': '${USER_ID}', 'aid': '0', 'net': 'ws', 'path': '/${USER_NAME}', 'type': 'none', 'host': '${USER_DOMAIN}', 'tls': 'none'}" | base64)
+ACCOUNT_URL=$(echo "vmess://${ACCOUNT_CONFIG}" | tr -d '\t')
 
 systemctl restart xray
 systemctl restart haproxy
