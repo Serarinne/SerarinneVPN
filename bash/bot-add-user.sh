@@ -11,13 +11,12 @@ until [[ $USER_NAME =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
     CLIENT_EXISTS=$(grep -w $USER_NAME /usr/local/etc/xray/config.json | wc -l)
     
     if [[ ${CLIENT_EXISTS} == '1' ]]; then
-        echo "Username already used"
+        echo "2"
     fi
 done
 
 ACTIVE_PERIOD=30
 USER_ID=$2
-USER_DOMAIN="${USER_NAME}.${SERVER_CF}"
 USER_DATE=`date -d "$ACTIVE_PERIOD days" +"%d-%m-%Y"`
 USER_PORT=10000
 
@@ -26,17 +25,6 @@ until [[ ${CHECKED_PORT} == '0' ]]; do
     CHECKED_PORT=$(nc -z -v localhost $USER_PORT 2>&1 | grep succeeded | wc -l)
 done
 
-curl --location 'https://api.cloudflare.com/client/v4/zones/2a55ca940ef2b1d004b567dba54bcd1b/dns_records' > /dev/null 2>&1 \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: schwarzertenshi90@gmail.com' \
---header 'X-Auth-Key: eeec3998181f0df4fdd7089b8dbb14cc6c4bd' \
---data '{
-      "content": "'${SERVER_DOMAIN}'",
-      "name": "'${USER_DOMAIN}'",
-      "proxied": false,
-      "type": "CNAME"
-    }'
-
 #sed -i '/#USER_ACCOUNT/a ,{"listen": "127.0.0.1","port": "'${USER_PORT}'","protocol": "trojan","settings": {"clients": [{"password": "'${USER_ID}'", "email": "'${USER_NAME}'", "level": 0}],"decryption": "none"},"streamSettings": {"network": "ws","security": "none","wsSettings": {"path": "/'${USER_NAME}'","host": ""},"quicSettings": {},"sockopt": {"mark": 0,"tcpFastOpen": true}},"sniffing": {"enabled": true,"destOverride": ["http","tls"]}} # '${USER_NAME}' '${USER_DATE}'' /usr/local/etc/xray/config.json
 sed -i '/#USER_ACCOUNT/a ,{"listen": "127.0.0.1","port": "'${USER_PORT}'","protocol": "vmess","settings": {"clients": [{"id": "'${USER_ID}'", "email": "'${USER_NAME}'","alterId": 0,"level": 0}],"decryption": "none"},"streamSettings": {"network": "ws","security": "none","wsSettings": {"path": "/'${USER_NAME}'","host": ""},"quicSettings": {},"sockopt": {"mark": 0,"tcpFastOpen": true}},"sniffing": {"enabled": true,"destOverride": ["http","tls"]}} # '${USER_NAME}' '${USER_DATE}'' /usr/local/etc/xray/config.json
 
@@ -44,10 +32,7 @@ sed -i '/#USER_FRONTEND/a     use_backend websocket_'${USER_NAME}' if { path /'$
 
 sed -i '/#USER_BACKEND/a backend websocket_'${USER_NAME}' # '${USER_NAME}' Backend\n    mode http # '${USER_NAME}' Backend\n    balance roundrobin # '${USER_NAME}' Backend\n    option forwardfor # '${USER_NAME}' Backend\n    timeout tunnel 2h # '${USER_NAME}' Backend\n    server '${USER_NAME}' 127.0.0.1:'${USER_PORT}' check # '${USER_NAME}' Backend' /etc/haproxy/haproxy.cfg
 
-ACCOUNT_CONFIG=$(echo -n "{'v': '2', 'ps': '${SERVER_NAME} ${USER_NAME} ${USER_DATE}', 'add': '${SERVER_BUG}', 'port': '80', 'id': '${USER_ID}', 'aid': '0', 'net': 'ws', 'path': '/${USER_NAME}', 'type': 'none', 'host': '${USER_DOMAIN}', 'tls': 'none'}" | base64 -w 0)
-ACCOUNT_URL="vmess://${ACCOUNT_CONFIG}"
-
 systemctl restart xray
 systemctl restart haproxy
 
-echo $ACCOUNT_URL
+echo "1"
